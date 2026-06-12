@@ -10,7 +10,7 @@ export default function Footer({ language }: FooterProps) {
   return (
     <footer className="footer">
       <div className="footer-newsletter">
-        <h2>BOLDCARE</h2>
+        <h2>FRESHMOUTH</h2>
         <p>{text.newsletter}</p>
 
         <form className="newsletter-form">
@@ -46,7 +46,7 @@ export default function Footer({ language }: FooterProps) {
       </div>
 
       <div className="footer-bottom">
-        <span>© 2026 BOLDCARE. All rights reserved.</span>
+        <span>© 2026 FRESHMOUTH. All rights reserved.</span>
         <span>Terms · Privacy · Accessibility</span>
       </div>
     </footer>
