@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import {
   languages,
@@ -28,11 +29,22 @@ export default function Navbar({
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <header className="navbar">
+    <motion.header
+      className="navbar"
+      initial={{ y: -90, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.55, ease: "easeOut" }}
+    >
       <div className="nav-inner">
-        <a href="#" className="logo" onClick={closeMenu}>
+        <motion.a
+          href="#"
+          className="logo"
+          onClick={closeMenu}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+        >
           FRESHMOUTH
-        </a>
+        </motion.a>
 
         <nav className="desktop-nav">
           <a href="#subscribe">{text.subscribe}</a>
@@ -72,9 +84,14 @@ export default function Navbar({
             ))}
           </select>
 
-          <button className="cart-button" type="button">
+          <motion.button
+            className="cart-button"
+            type="button"
+            whileHover={{ y: -2, scale: 1.03 }}
+            whileTap={{ scale: 0.96 }}
+          >
             Cart
-          </button>
+          </motion.button>
         </div>
 
         <button
@@ -90,62 +107,76 @@ export default function Navbar({
         </button>
       </div>
 
-      <div className={`mobile-menu ${isOpen ? "show" : ""}`}>
-        <nav className="mobile-nav">
-          <a href="#subscribe" onClick={closeMenu}>
-            {text.subscribe}
-          </a>
-          <a href="#rewards" onClick={closeMenu}>
-            {text.rewards}
-          </a>
-          <a href="#products" onClick={closeMenu}>
-            {text.shop}
-          </a>
-          <a href="#story" onClick={closeMenu}>
-            {text.story}
-          </a>
-        </nav>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="mobile-menu show"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.28, ease: "easeOut" }}
+          >
+            <nav className="mobile-nav">
+              <a href="#subscribe" onClick={closeMenu}>
+                {text.subscribe}
+              </a>
+              <a href="#rewards" onClick={closeMenu}>
+                {text.rewards}
+              </a>
+              <a href="#products" onClick={closeMenu}>
+                {text.shop}
+              </a>
+              <a href="#story" onClick={closeMenu}>
+                {text.story}
+              </a>
+            </nav>
 
-        <div className="mobile-options">
-          <div className="mobile-field">
-            <label>Country</label>
-            <select
-              className="nav-select"
-              value={market}
-              onChange={(event) =>
-                onMarketChange(event.target.value as MarketCode)
-              }
-            >
-              {Object.entries(markets).map(([code, item]) => (
-                <option key={code} value={code}>
-                  {item.flag} {item.shortLabel}
-                </option>
-              ))}
-            </select>
-          </div>
+            <div className="mobile-options">
+              <div className="mobile-field">
+                <label>Country</label>
+                <select
+                  className="nav-select"
+                  value={market}
+                  onChange={(event) =>
+                    onMarketChange(event.target.value as MarketCode)
+                  }
+                >
+                  {Object.entries(markets).map(([code, item]) => (
+                    <option key={code} value={code}>
+                      {item.flag} {item.shortLabel}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          <div className="mobile-field">
-            <label>Language</label>
-            <select
-              className="nav-select"
-              value={language}
-              onChange={(event) =>
-                onLanguageChange(event.target.value as LanguageCode)
-              }
-            >
-              {Object.entries(languages).map(([code, item]) => (
-                <option key={code} value={code}>
-                  {item.nativeLabel}
-                </option>
-              ))}
-            </select>
-          </div>
+              <div className="mobile-field">
+                <label>Language</label>
+                <select
+                  className="nav-select"
+                  value={language}
+                  onChange={(event) =>
+                    onLanguageChange(event.target.value as LanguageCode)
+                  }
+                >
+                  {Object.entries(languages).map(([code, item]) => (
+                    <option key={code} value={code}>
+                      {item.nativeLabel}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          <button className="cart-button mobile-cart" type="button">
-            Cart
-          </button>
-        </div>
-      </div>
-    </header>
+              <motion.button
+                className="cart-button mobile-cart"
+                type="button"
+                whileTap={{ scale: 0.97 }}
+              >
+                Cart
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   );
 }

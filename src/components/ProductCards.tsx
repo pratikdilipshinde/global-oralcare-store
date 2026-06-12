@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
 import {
   formatMoney,
   LanguageCode,
@@ -17,14 +20,32 @@ export default function ProductCards({ market, language }: ProductCardsProps) {
 
   return (
     <section id="products" className="products-section">
-      <div className="section-heading">
+      <motion.div
+        className="section-heading"
+        initial={{ opacity: 0, y: 36 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.35 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <p className="eyebrow">{text.productSectionEyebrow}</p>
         <h2>{text.productSectionTitle}</h2>
-      </div>
+      </motion.div>
 
       <div className="product-grid">
-        {products.map((product) => (
-          <article className="product-card" key={product.id}>
+        {products.map((product, index) => (
+          <motion.article
+            className="product-card"
+            key={product.id}
+            initial={{ opacity: 0, y: 42, scale: 0.96 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{
+              duration: 0.55,
+              delay: index * 0.08,
+              ease: "easeOut",
+            }}
+            whileHover={{ y: -8 }}
+          >
             <div className="product-image">
               <Image
                 src={product.image}
@@ -42,10 +63,15 @@ export default function ProductCards({ market, language }: ProductCardsProps) {
 
               <div className="product-bottom">
                 <strong>{formatMoney(product.prices[market], market)}</strong>
-                <button>{text.addToCart}</button>
+                <motion.button
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
+                >
+                  {text.addToCart}
+                </motion.button>
               </div>
             </div>
-          </article>
+          </motion.article>
         ))}
       </div>
     </section>

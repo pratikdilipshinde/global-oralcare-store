@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { LanguageCode, translations } from "@/lib/market-config";
 
 type FooterProps = {
@@ -8,14 +11,28 @@ export default function Footer({ language }: FooterProps) {
   const text = translations[language];
 
   return (
-    <footer className="footer">
+    <motion.footer
+      className="footer"
+      initial={{ opacity: 0, y: 45 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.65, ease: "easeOut" }}
+    >
       <div className="footer-newsletter">
-        <h2>FRESHMOUTH</h2>
-        <p>{text.newsletter}</p>
+        <div>
+          <h2>FRESHMOUTH</h2>
+          <p>{text.newsletter}</p>
+        </div>
 
         <form className="newsletter-form">
           <input type="email" placeholder="Email address" />
-          <button type="button">Join</button>
+          <motion.button
+            type="button"
+            whileHover={{ y: -2, scale: 1.03 }}
+            whileTap={{ scale: 0.96 }}
+          >
+            Join
+          </motion.button>
         </form>
       </div>
 
@@ -30,10 +47,10 @@ export default function Footer({ language }: FooterProps) {
 
         <div>
           <h3>{text.footerShop}</h3>
-          <a href="#">Soap</a>
-          <a href="#">Deodorant</a>
-          <a href="#">Hair Care</a>
-          <a href="#">Bundles</a>
+          <a href="#">Toothpaste</a>
+          <a href="#">Mouthwash</a>
+          <a href="#">Oil Pulling</a>
+          <a href="#">Toothbrush</a>
         </div>
 
         <div>
@@ -49,6 +66,6 @@ export default function Footer({ language }: FooterProps) {
         <span>© 2026 FRESHMOUTH. All rights reserved.</span>
         <span>Terms · Privacy · Accessibility</span>
       </div>
-    </footer>
+    </motion.footer>
   );
 }
